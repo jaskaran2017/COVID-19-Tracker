@@ -1,0 +1,23 @@
+* {
+  margin: 0;
+  paddding: 0;
+}
+.table {
+  height: 400px;
+  overflow: scroll;
+  margin-top: 20px;
+  color: #6a5d5d;
+}
+.table__row {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.table td {
+  margin: 0.5rem;
+}
+.table tr:nth-of-type(odd) {
+  background-color: #f3f2f8;
+  /* thisline (table tr:nth-of-type(odd)) means to select all odd numbers abd make their background as per the color specified  */
+}
