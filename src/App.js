@@ -22,14 +22,13 @@ import numeral from "numeral";
 function App() {
   const [countries, setCountries] = useState([]); // this is used to select countries worldwide
   const [country, setInputCountry] = useState("worldwide");
-  const [casesType, setCasesType] = useState("cases")
+  const [casesType, setCasesType] = useState("cases");
   const [countryInfo, setCountryInfo] = useState({});
   const [tableData, setTableData] = useState([]);
   const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
   const [mapZoom, setMapZoom] = useState(2);
   const [mapCountries, setMapCountries] = useState([]);
- 
- 
+
   useEffect(() => {
     //this useEffect will run when the page loads/refreshed and give us data for whole wolrd stats of covid-19
     fetch("https://disease.sh/v3/covid-19/all")
@@ -103,7 +102,7 @@ function App() {
         </header>
 
         <div className="app__stats">
-        <InfoBox
+          <InfoBox
             onClick={(e) => setCasesType("cases")}
             title="Coronavirus Cases"
             isRed
@@ -135,7 +134,9 @@ function App() {
         <CardContent>
           <h1>Live cases by Country </h1>
           <Table countries={tableData} />
-          <h1>Worldwide Graph{casesType}</h1>
+          <h1>
+            {country} {casesType}
+          </h1>
           <Linegraph casesType={casesType} />
         </CardContent>
       </Card>
