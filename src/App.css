@@ -13,9 +13,15 @@ body {
 .app__left {
   flex: 0.9;
 }
+.app__media {
+  display: flex;
+  justify-content: space-evenly;
+  border: 2px solid blue;
+}
 .app__input {
   border: 1px solid lightslategrey;
   padding: 5px;
+  display: flex;
 }
 .app__search {
   border: none;
@@ -59,5 +65,37 @@ body {
 @media (max-width: 990px) {
   .app-1 {
     flex-direction: column;
+  }
+  .app__input {
+    display: flex;
+    margin-bottom: 5px;
+  }
+  .app__media {
+    flex-direction: column;
+  }
+ 
+}
+@media (max-width: 380px) {
+  .app__input {
+    display: flex;
+  }
+  .app__header {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .app__stats {
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 670px) {
+  .app__media {
+    display: flex;
+    flex-direction: column;
+  }
+  .app__input {
+    display: flex;
   }
 }

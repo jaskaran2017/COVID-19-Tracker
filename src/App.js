@@ -115,31 +115,33 @@ function App() {
         <div className="app__left">
           <header className="app__header">
             <h1>COVID-19 TRACKER</h1>
-            <div className="app__input">
-              <input
-                className="app__search"
-                type="text"
-                value={countryName}
-                onChange={(e) => setCountryName(e.target.value)}
-                placeholder="Country Name"
-              />
-              <button>
-                <FaSearchengin onClick={searchCountry} />
-              </button>
-            </div>
+            <div className="app__media">
+              <div className="app__input">
+                <input
+                  className="app__search"
+                  type="text"
+                  value={countryName}
+                  onChange={(e) => setCountryName(e.target.value)}
+                  placeholder="Country Name"
+                />
+                <button>
+                  <FaSearchengin onClick={searchCountry} />
+                </button>
+              </div>
 
-            <FormControl className="app__dropdown">
-              <Select
-                value={country}
-                variant="outlined"
-                onChange={onCountryChange}
-              >
-                <MenuItem value="worldwide">WorldWide</MenuItem>
-                {countries.map((country) => (
-                  <MenuItem value={country.value}>{country.name}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+              <FormControl className="app__dropdown">
+                <Select
+                  value={country}
+                  variant="outlined"
+                  onChange={onCountryChange}
+                >
+                  <MenuItem value="worldwide">WorldWide</MenuItem>
+                  {countries.map((country) => (
+                    <MenuItem value={country.value}>{country.name}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
           </header>
 
           <div className="app__stats">
