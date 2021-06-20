@@ -1,0 +1,19 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.footer {
+  /* margin-left: 2%; */
+  /* margin-right: 2%; */
+  margin-bottom: 5px;
+  /* position: sticky; */
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid red;
+  width: 100%;
+  background-color:#F48FB1;
+  padding: 1rem;
+}
+

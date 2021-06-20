@@ -5,13 +5,22 @@
 body {
   background-color: #f5f6fa;
 }
-.app {
+.app-1 {
   display: flex;
   justify-content: space-evenly;
   padding: 20px;
 }
 .app__left {
   flex: 0.9;
+}
+.app__input {
+  border: 1px solid lightslategrey;
+  padding: 5px;
+}
+.app__search {
+  border: none;
+  outline: none;
+  padding: 5px;
 }
 
 .app__header {
@@ -33,6 +42,10 @@ body {
   margin-left: 20px;
   margin-right: 20px;
 }
+.app__input > button {
+  border: none;
+  outline: none;
+}
 .app__information > h3 {
   color: #6a5d5d;
   font-weight: 400;
@@ -44,7 +57,7 @@ body {
   margin-top: 1rem;
 }
 @media (max-width: 990px) {
-  .app {
+  .app-1 {
     flex-direction: column;
   }
 }

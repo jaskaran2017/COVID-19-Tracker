@@ -7,14 +7,16 @@ import {
   MenuItem,
   Select,
 } from "@material-ui/core";
+import { FaSearchengin } from "react-icons/fa";
 import InfoBox from "./InfoBox";
 import Map from "./Map";
 import Table from "./Table";
-// import { sortData } from "./util";
+
 import Linegraph from "./Linegraph";
 import "leaflet/dist/leaflet.css";
 import { sortData, prettyPrintStat } from "./util";
 import numeral from "numeral";
+import Footer from "./Footer";
 ////////////////////////
 
 // https://disease.sh/v3/covid-19/countries
@@ -22,10 +24,11 @@ import numeral from "numeral";
 function App() {
   const [countries, setCountries] = useState([]); // this is used to select countries worldwide
   const [country, setInputCountry] = useState("worldwide");
+  const [countryName, setCountryName] = useState("");
   const [casesType, setCasesType] = useState("cases");
   const [countryInfo, setCountryInfo] = useState({});
   const [tableData, setTableData] = useState([]);
-  const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
+  const [mapCenter, setMapCenter] = useState({ lat: 38, lng: -97 });
   const [mapZoom, setMapZoom] = useState(2);
   const [mapCountries, setMapCountries] = useState([]);
 
@@ -47,8 +50,9 @@ function App() {
         .then((data) => {
           const countries = data.map((country) => ({
             name: country.country, //this will give full name of a country
-            value: country.countryInfo.iso2, // this will give code name of country
+            value: country.countryInfo.iso3, // this will give code name of country
           }));
+          console.log(data);
           let sortedData = sortData(data); //this function will sort the data in desc order
           setTableData(sortedData);
           setCountries(countries);
@@ -57,7 +61,30 @@ function App() {
     };
     getCountriesData();
   }, []);
+  ////////////////////////////////////////////
+  const searchCountry = async (e) => {
+    const country = countryName;
+    // const countryName = e.target.value;
+    // const countryCode = countryName;
+    // console.log(inputField);
+    setCountryName(country); // this will help in selecting country name from dropdown
 
+    //now here we will fetch the data from the url to display the current stats
+    //and here we will address two conditions
+    // first is to show stats for whole world abd second is to show stats for specific country from dropdown list
+    const url = `https://disease.sh/v3/covid-19/countries/${country}`;
+
+    await fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        // setInputCountry(countryCode);
+        setCountryInfo(data); // this will give all the info related to covid-19 in the selected country. this will we a json data.
+        setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+        setMapZoom(4);
+        setCountryName("");
+      });
+  };
+  /////////////////////////////////////////////////
   const onCountryChange = async (e) => {
     const countryCode = e.target.value;
     // console.log(countryCode);
@@ -84,62 +111,81 @@ function App() {
 
   return (
     <div className="app">
-      <div className="app__left">
-        <header className="app__header">
-          <h1>COVID-19 TRACKER</h1>
-          <FormControl className="app__dropdown">
-            <Select
-              value={country}
-              variant="outlined"
-              onChange={onCountryChange}
-            >
-              <MenuItem value="worldwide">WorldWide</MenuItem>
-              {countries.map((country) => (
-                <MenuItem value={country.value}>{country.name}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </header>
+      <div className="app-1">
+        <div className="app__left">
+          <header className="app__header">
+            <h1>COVID-19 TRACKER</h1>
+            <div className="app__input">
+              <input
+                className="app__search"
+                type="text"
+                value={countryName}
+                onChange={(e) => setCountryName(e.target.value)}
+                placeholder="Country Name"
+              />
+              <button>
+                <FaSearchengin onClick={searchCountry} />
+              </button>
+            </div>
 
-        <div className="app__stats">
-          <InfoBox
-            onClick={(e) => setCasesType("cases")}
-            title="Coronavirus Cases"
-            isRed
-            active={casesType === "cases"}
-            cases={prettyPrintStat(countryInfo.todayCases)}
-            total={numeral(countryInfo.cases).format("0.0a")}
-          />
-          <InfoBox
-            onClick={(e) => setCasesType("recovered")}
-            title="Recovered"
-            active={casesType === "recovered"}
-            cases={prettyPrintStat(countryInfo.todayRecovered)}
-            total={numeral(countryInfo.recovered).format("0.0a")}
-          />
-          <InfoBox
-            onClick={(e) => setCasesType("deaths")}
-            title="Deaths"
-            isRed
-            active={casesType === "deaths"}
-            cases={prettyPrintStat(countryInfo.todayDeaths)}
-            total={numeral(countryInfo.deaths).format("0.0a")}
-          />
+            <FormControl className="app__dropdown">
+              <Select
+                value={country}
+                variant="outlined"
+                onChange={onCountryChange}
+              >
+                <MenuItem value="worldwide">WorldWide</MenuItem>
+                {countries.map((country) => (
+                  <MenuItem value={country.value}>{country.name}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </header>
+
+          <div className="app__stats">
+            <InfoBox
+              onClick={(e) => setCasesType("cases")}
+              title="Coronavirus Cases"
+              isRed
+              active={casesType === "cases"}
+              cases={prettyPrintStat(countryInfo.todayCases)}
+              total={numeral(countryInfo.cases).format("0.0a")}
+            />
+            <InfoBox
+              onClick={(e) => setCasesType("recovered")}
+              title="Recovered"
+              active={casesType === "recovered"}
+              cases={prettyPrintStat(countryInfo.todayRecovered)}
+              total={numeral(countryInfo.recovered).format("0.0a")}
+            />
+            <InfoBox
+              onClick={(e) => setCasesType("deaths")}
+              title="Deaths"
+              isRed
+              active={casesType === "deaths"}
+              cases={prettyPrintStat(countryInfo.todayDeaths)}
+              total={numeral(countryInfo.deaths).format("0.0a")}
+            />
+          </div>
+          <div className="app__map">
+            <Map countries={mapCountries} center={mapCenter} zoom={mapZoom} />
+          </div>
         </div>
-        <div className="app__map">
-          <Map countries={mapCountries} center={mapCenter} zoom={mapZoom} />
-        </div>
+        <Card className="app__right">
+          <CardContent>
+            <h1>Live cases by Country </h1>
+            <Table countries={tableData} />
+            {}
+            <h1>
+              {country} {casesType}
+            </h1>
+            <Linegraph casesType={casesType} />
+          </CardContent>
+        </Card>
       </div>
-      <Card className="app__right">
-        <CardContent>
-          <h1>Live cases by Country </h1>
-          <Table countries={tableData} />
-          <h1>
-            {country} {casesType}
-          </h1>
-          <Linegraph casesType={casesType} />
-        </CardContent>
-      </Card>
+      <div>
+        <Footer />
+      </div>
     </div>
   );
 }
