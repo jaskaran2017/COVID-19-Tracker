@@ -15,13 +15,15 @@ body {
 }
 .app__media {
   display: flex;
-  justify-content: space-evenly;
-  border: 2px solid blue;
+  justify-content: center;
+  width: 20rem;
+  /* border: 1px solid blue; */
 }
 .app__input {
   border: 1px solid lightslategrey;
   padding: 5px;
   display: flex;
+  margin-right: 5px;
 }
 .app__search {
   border: none;
@@ -65,6 +67,7 @@ body {
 @media (max-width: 990px) {
   .app-1 {
     flex-direction: column;
+    padding: 10px;
   }
   .app__input {
     display: flex;
@@ -72,10 +75,51 @@ body {
   }
   .app__media {
     flex-direction: column;
+    max-width: 10rem;
   }
- 
+  .app__header {
+    width: 100%;
+  }
 }
 @media (max-width: 380px) {
+  .app__media {
+    display: flex;
+    flex-direction: column;
+    max-width: 10rem;
+  }
+  .app-1 {
+    flex-direction: column;
+    padding: 5px;
+  }
+  .app__header {
+    width: 100%;
+  }
+  .app__input {
+    display: flex;
+  }
+  .app__header {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .app__stats {
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+}
+@media (max-width: 415px) {
+  .app__media {
+    display: flex;
+    flex-direction: column;
+    max-width: 10rem;
+  }
+  .app-1 {
+    flex-direction: column;
+    padding: 5px;
+  }
+  .app__header {
+    width: 100%;
+  }
   .app__input {
     display: flex;
   }
@@ -91,9 +135,17 @@ body {
 }
 
 @media (max-width: 670px) {
+  .app-1 {
+    flex-direction: column;
+    padding: 5px;
+  }
+  .app__header {
+    width: 100%;
+  }
   .app__media {
     display: flex;
     flex-direction: column;
+    max-width: 10rem;
   }
   .app__input {
     display: flex;

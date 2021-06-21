@@ -124,8 +124,8 @@ function App() {
                   onChange={(e) => setCountryName(e.target.value)}
                   placeholder="Country Name"
                 />
-                <button>
-                  <FaSearchengin onClick={searchCountry} />
+                <button disabled={!countryName} onClick={searchCountry}>
+                  <FaSearchengin color="red" />
                 </button>
               </div>
 
